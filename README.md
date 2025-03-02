@@ -4,23 +4,59 @@ A collection of AI-powered tools for email summarization and customer support us
 
 ## Projects Overview
 
-### 1. Email Summarizer
+### 1. Email Summarizer (`email_summary.py`)
 Fetches and summarizes emails from Gmail using OpenAI's GPT model.
 
 **Key Features:**
-- Gmail API integration
-- Email search and filtering
-- Attachment handling
-- AI-powered summarization
-- Material UI frontend
+- Gmail API integration with OAuth2 authentication
+- Email search and filtering by sender, date, or query
+- Attachment detection and handling
+- Markdown-formatted email summaries
+- Error handling and token management
 
-### 2. Customer Support Chatbot
+**Usage:**
+```python
+# Get emails from specific sender
+emails = get_emails_from_sender("example@gmail.com", 5)
+
+# Search emails with filters
+search_emails(query="important", max_results=10, days=7)
+
+# Get summary of emails
+summary = summarise("sender@example.com")
+```
+
+### 2. Customer Support Chatbot (`customer_support_chatbot.py`)
 AI chatbot for customer support using Gradio interface.
 
 **Key Features:**
-- Interactive chat interface
-- Context-aware responses
+- Interactive chat interface with Gradio
+- Context-aware responses using GPT-3.5
 - Custom system prompts
+- Chat history management
+- Error handling and retry options
+
+**Usage:**
+```python
+# Launch the chatbot interface
+python customer_support_chatbot.py
+```
+
+### 3. Frontend Application (`frontend/`)
+React-based frontend using Material-UI for email summarization.
+
+**Components:**
+- `App.jsx`: Main application component with Material-UI interface
+- `main.jsx`: Application entry point
+- `vite.config.js`: Vite configuration with API proxy
+- `index.html`: HTML template
+
+**Features:**
+- Clean Material Design interface
+- Real-time summary generation
+- Error handling and loading states
+- Responsive layout
+- Dark/light theme support
 
 ## Setup Instructions
 
@@ -65,36 +101,28 @@ OPENAI_API_KEY=your_openai_api_key
 5. Create OAuth 2.0 credentials
 6. Download and rename credentials to `credentials.json`
 
-## Running the Applications
-
-### Email Summarizer
-```bash
-python email_summary.py
-```
-
-### Customer Support Chatbot
-```bash
-python customer_support_chatbot.py
-```
-
-### Frontend
-```bash
-cd frontend
-pnpm dev
-```
-
 ## Project Structure
 ```
 my_code/
-├── email_summary.py      # Gmail integration and summarization
+├── email_summary.py           # Gmail integration and summarization
+│   ├── authenticate_gmail()   # Handles OAuth2 authentication
+│   ├── get_email_content()   # Retrieves email content
+│   ├── search_emails()       # Searches emails with filters
+│   └── summarise()          # Generates email summaries
+│
 ├── customer_support_chatbot.py  # AI chatbot
-├── frontend/            # React frontend
+│   ├── chat()               # Main chat function
+│   └── system_message       # Chatbot configuration
+│
+├── frontend/                 # React frontend
 │   ├── src/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   └── vite.config.js
-└── README.md
+│   │   ├── App.jsx         # Main UI component
+│   │   └── main.jsx        # Entry point
+│   ├── package.json        # Dependencies
+│   ├── vite.config.js      # Build configuration
+│   └── index.html          # HTML template
+│
+└── README.md                # Project documentation
 ```
 
 ## Dependencies
@@ -112,10 +140,34 @@ uvicorn
 ```
 
 ### Frontend
-- React
-- Material-UI
-- Vite
+- React 18
+- Material-UI 5
+- Vite 5
 - pnpm
+
+## Development
+
+### Running the Applications
+
+1. Email Summarizer:
+```bash
+python email_summary.py
+```
+
+2. Customer Support Chatbot:
+```bash
+python customer_support_chatbot.py
+```
+
+3. Frontend:
+```bash
+cd frontend
+pnpm dev
+```
+
+### API Endpoints
+- `/summarize`: POST endpoint for email summarization
+- `/health`: GET endpoint for health check
 
 ## License
 MIT
